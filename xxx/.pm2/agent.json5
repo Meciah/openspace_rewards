@@ -1,0 +1,11 @@
+{
+    "version_management": {
+        "active": true
+    },
+    "public_key": "ipc2c2c2swqo98y",
+    "secret_key": "ns1uwat6ner65i2",
+    "machine_name": "DESKTOP-SIJSTGV-e61f",
+    "pm2_version": "5.3.0",
+    "reverse_interact": true,
+    "info_node": "https://root.keymetrics.io"
+}

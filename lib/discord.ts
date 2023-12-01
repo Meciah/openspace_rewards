@@ -1,38 +1,17 @@
 // discord webhook sender
 
-import {
-  IMarketAsset,
-  IMarketPrice,
-  ISale,
-} from "atomicmarket/build/API/Explorer/Objects";
 import fetch from "cross-fetch";
-import { atomicmarket } from "./atomicmarket";
-import { ATOMICHUB_COLLECTION } from "./config";
 import { WEBHOOK } from "./env";
 import { sleep } from "./etc";
 
-export const processSale = async (saleId: number, buyer: string) => {
+export const processSale = async (land_id: number, project_name: string, reward: Array<number>, winner:string) => {
   // try to prevent sudden multiple requests
   // TODO: add ways to improve or change this
   await sleep(1000);
 
-  let sale: ISale;
-  try {
-    sale = await atomicmarket.getSale(saleId.toString());
-  } catch (e) {
-    console.error(`Failed to process Sale: #${saleId} | Error: ${String(e)}`);
-    return;
-  }
-
-  for (const i of sale.assets) {
-    // ignore other sales other than the own collection defined
-    if (i.collection.collection_name !== ATOMICHUB_COLLECTION) {
-      return;
-    }
-
-    // send the sale embed to the discord webhook
-    const res = createResponse(i, buyer, sale.seller, sale.price, saleId);
-
+  //send the sale embed to the discord webhook
+    const res = createResponse(land_id, project_name, reward, winner);
+    console.log(res.embeds[0].fields);
     let discordWebhook = WEBHOOK;
     if (!WEBHOOK.endsWith("?wait=true")) {
       discordWebhook += "?wait=true";
@@ -48,11 +27,9 @@ export const processSale = async (saleId: number, buyer: string) => {
     const data = await r.json();
     if (!r.ok) {
       console.error(data);
-      continue; // just try to continue if failed to send
     }
 
-    console.log(`Sent: SALE #${saleId}`);
-  }
+    console.log(`Sent: Land_id #${land_id}`);
 };
 
 const handleImg = (img: string) => {
@@ -65,58 +42,48 @@ const handleImg = (img: string) => {
 
 // generate embed response
 const createResponse = (
-  asset: IMarketAsset,
-  buyer: string,
-  seller: string,
-  price: IMarketPrice,
-  saleId: number
+  land_id: number,
+  project_name: string,
+  reward: Array<number>,
+  winner: string,
 ) => {
   return {
     content: null,
     embeds: [
       {
         author: {
-          name: asset.collection.collection_name,
-          icon_url: `https://atomichub-ipfs.com/ipfs/${asset.collection.img}`,
+          name: "The Open Space",
+          icon_url: `https://resizer.atomichub.io/images/v1/preview?ipfs=QmSoLjiW5Bgro3NmE3ZXQ7mkBGhXHezpU3ysDo1maDhugn&size=370&output=png`,
         },
-        thumbnail: asset.template.immutable_data.img
-          ? {
-              url: handleImg(asset.template.immutable_data.img),
-            }
-          : undefined,
-        title: asset.name,
+        title: "Reward Issued",
         fields: [
           {
-            name: "Buyer",
-            value: buyer,
+            name: "Project Name",
+            value: project_name,
             inline: true,
           },
           {
-            name: "Seller",
-            value: seller,
+            name: "Land ID",
+            value: land_id,
             inline: true,
           },
           {
-            name: "\u200b",
-            value: "\u200b",
+            name: "Reward Winner",
+            value: winner,
           },
-          {
-            name: "Price",
-            value: `${(Number(price.amount) / 100000000).toFixed(2)} ${
-              price.token_symbol
-            }`,
-          },
+            ...reward.map((rewards, index) => ({
+              name: `Reward`,
+              value: `${rewards}`,
+            })),
         ],
-        image: asset.template.immutable_data.img
-          ? {
-              url: handleImg(asset.template.immutable_data.img),
-            }
-          : undefined,
         timestamp: new Date().toISOString(),
-        footer: {
-          text: `Sale ID: ${saleId}`,
-        },
+        // footer: {
+        //   text: `Sale ID: ${saleId}`,
+        // },
       },
     ],
+
   };
+
 };
+

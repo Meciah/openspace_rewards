@@ -27,23 +27,41 @@ async function main(): Promise<void> {
   console.log("Starting...");
 
   const stream = await client.streamActionTraces(
-    { accounts: "atomicmarket", action_names: "purchasesale" },
+    { accounts: "theopenroyal", action_names: "logreward" },
     (message: InboundMessage<any>) => {
       if (message.type === InboundMessageType.ACTION_TRACE) {
-        const { sale_id, buyer }: PurchaseSaleProps = (
+        const { land_id, project_name, reward, winner }: PurchaseSaleProps = (
           message.data as ActionTraceData<any>
         ).trace.act.data;
 
-        console.log(`Sale: #${sale_id} | Buyer: '${buyer}'`);
+        console.log(`land_id: #${land_id} | project_name: '${project_name}' | reward: '${reward} | winner: '${winner}'`);
 
         // NOTE: do not await as it will block the process
-        processSale(sale_id, buyer);
+        //console.log(memo.split(" ")[0])
+        processSale(land_id, project_name, reward, winner);
       }
     }
   );
 
+  // const stream2 = await client.streamActionTraces(
+  //   { accounts: "theopenroyal", action_names: "transfer" },
+  //   (message: InboundMessage<any>) => {
+  //     if (message.type === InboundMessageType.ACTION_TRACE) {
+  //       const { memo, quantity, to }: PurchaseSaleProps = (
+  //         message.data as ActionTraceData<any>
+  //       ).trace.act.data;
+
+  //       console.log(`Mesdfgsdgsmo: #${memo[0]} | Quantity: '${quantity}' | Buyer: '${to}'`);
+
+  //       // NOTE: do not await as it will block the process
+  //       processSale(memo.split(" ").slice(-1)[0], quantity, to);
+  //     }
+  //   }
+  // );
+
   await new Promise(() => {});
   await stream.close();
+  //await stream2.close();
 
   client.release();
 }

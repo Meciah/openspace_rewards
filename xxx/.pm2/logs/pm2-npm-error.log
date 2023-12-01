@@ -1,0 +1,59 @@
+npm WARN using --force Recommended protections disabled.
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+{ embeds: [ '0' ] }
+An unhandled rejection error has been catched at the process level. This is
+completely wrong and should never happen in the examples. If you see this behavior,
+there is probably something very fishy.
+
+You should log a bug report if you see this error, attach the debug output by
+using `DEBUG='dfuse:*' yarn run:example ...`.
+
+Read about unhandle rejection error https://stackoverflow.com/q/40500490/697930
+
+FetchError: invalid json response body at https://discord.com/api/webhooks/1178148857977253938/HO0zTQkVkyc2B-09ZYqxb3F_f2i0I4u6qMQ6u6p9q0u6FcOtAKp4CLZYKYvEXikP0F_z?wait=true reason: Unexpected token '<', "<html>
+<h"... is not valid JSON
+    at C:\Users\mecia\Desktop\openspace_reward_bot2\wax-nftsale-bot\node_modules\node-fetch\lib\index.js:273:32
+    at processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  type: 'invalid-json'
+}
+FetchError: invalid json response body at https://discord.com/api/webhooks/1178148857977253938/HO0zTQkVkyc2B-09ZYqxb3F_f2i0I4u6qMQ6u6p9q0u6FcOtAKp4CLZYKYvEXikP0F_z?wait=true reason: Unexpected token '<', "<html>
+<h"... is not valid JSON
+    at C:\Users\mecia\Desktop\openspace_reward_bot2\wax-nftsale-bot\node_modules\node-fetch\lib\index.js:273:32
+    at processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  type: 'invalid-json'
+}
+Error: Command failed: npm start
+    at checkExecSyncError (node:child_process:890:11)
+    at execSync (node:child_process:962:15)
+    at Object.<anonymous> (C:\Users\mecia\Desktop\openspace_reward_bot2\wax-nftsale-bot\pm2-npm.js:7:1)
+    at Module._compile (node:internal/modules/cjs/loader:1376:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1435:10)
+    at Module.load (node:internal/modules/cjs/loader:1207:32)
+    at Module._load (node:internal/modules/cjs/loader:1023:12)
+    at Object.<anonymous> (C:\Users\mecia\AppData\Roaming\npm\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+    at Module._compile (node:internal/modules/cjs/loader:1376:14) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 26076,
+  stdout: null,
+  stderr: null
+}
